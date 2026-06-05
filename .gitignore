@@ -2,4 +2,16 @@ venv/
 __pycache__/
 .codex/
 .env
+.env.*
 .agents/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pyc
+mcp_tools_report.json
+mcp_tools_report.*.json
+.DS_Store
+__init__.py
+docs/
+examples/
+notebooks/

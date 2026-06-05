@@ -1,13 +1,25 @@
-from dotenv import load_dotenv
-load_dotenv()
+from __future__ import annotations
 
-import os
-from databricks.sdk import WorkspaceClient
+from pathlib import Path
+import sys
 
-w = WorkspaceClient(
-    host=os.getenv("DATABRICKS_HOST"),
-    token=os.getenv("DATABRICKS_TOKEN")
-)
+ROOT = Path(__file__).resolve().parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
-for catalog in w.catalogs.list():
-    print(catalog.name)
+from dbx_mcp_demo.clients import make_workspace_client
+from dbx_mcp_demo.config import load_settings
+
+
+def main() -> int:
+    settings = load_settings()
+    workspace_client = make_workspace_client(settings)
+
+    for catalog in workspace_client.catalogs.list():
+        print(catalog.name)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
